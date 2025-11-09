@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function checkinput() {
     fetch('/flags').then(r => r.json()).then(data => {
       if (data && data.flags) {
-        if (sqlion) sqlion.checked = !!data.flags.sqlInjectionEnabled;
-        if (authon) authon.checked = !!data.flags.brokenAuthEnabled;
+        if (sqlion) sqlion.checked = !!data.flags.sqlinjOn;
+        if (authon) authon.checked = !!data.flags.brokenAuthOn;
       }
     }).catch(() => {});
   }
@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (sqlion) {
     sqlion.addEventListener('change', () => {
-      setFlag('sqlInjectionEnabled', sqlion.checked).catch(() => {});
+      setFlag('sqlinjOn', sqlion.checked).catch(() => {});
     });
   }
 
   if (authon) {
     authon.addEventListener('change', () => {
-      setFlag('brokenAuthEnabled', authon.checked).catch(() => {});
+      setFlag('brokenAuthOn', authon.checked).catch(() => {});
     });
   }
 
