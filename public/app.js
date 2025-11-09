@@ -52,11 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       }).then(r => r.json()).then(data => {
-        if (!data) return alert('Nema odgovora od servera');
         if (data.success) {
           let msg = data.message || 'Uspjeh';
           if (data.exposedRows && Array.isArray(data.exposedRows) && data.exposedRows.length > 0) {
-            msg += `\nExposed rows: ${data.exposedRows.length}\nPrvi red: ${JSON.stringify(data.exposedRows[0])}`;
+            msg += `\ndatabase: ${JSON.stringify(data.exposedRows[0])} ${JSON.stringify(data.exposedRows[1])}`;
           } else if (data.cookie) {
             msg += `\nCookie: ${data.cookie}`;
           }
@@ -65,16 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           alert('Neuspjela prijava: ' + (data.message || 'nepoznata greška'));
         }
-      }).catch(err => {
-        alert('Greška pri prijavi: ' + err);
-      });
+      }).catch(err => { alert('Greška pri prijavi: ' + err);});
     });
   }
 
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       fetch('/logout', { method: 'POST' }).then(() => {
-        alert('Odjavljen (cookie obrisan)');
+        alert('odjavljen (cookie obrisan)');
       }).catch(err => alert('Greška pri odjavi: ' + err));
     });
   }

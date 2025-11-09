@@ -53,23 +53,23 @@ app.post('/login', (req, res) => {
       if (err) return res.json({ success: false });
 
       if (!rows || rows.length === 0) 
-        return res.json({ success: false, message: 'Neispravni podaci' });
+        return res.json({ success: false, message: 'pogrešni podaci' });
       
       return loginSucc(rows[0], rows, res);
     });
   } else {
     db.get('SELECT * FROM users WHERE username = ?;', [username], (err, row) => {
       if (err) return res.json({ success: false });
-      if (!row) return res.json({ success: false, message: 'Neispravni podaci' });
+      if (!row) return res.json({ success: false, message: 'pogrešni podaci' });
 
       if (flags.brokenAuthOn) {
         if (row.password === password) return loginSucc(row, [row], res);
-        return res.json({ success: false, message: 'Neispravni podaci' });
+        return res.json({ success: false, message: 'pogrešni podaci' });
       } else {
         const hash = bcrypt.hashSync(row.password, 10);
         const same = bcrypt.compareSync(password, hash);
         if (same) return loginSucc(row, [row], res);
-        return res.json({ success: false, message: 'Neispravni podaci' });
+        return res.json({ success: false, message: 'pogrešni podaci' });
       }
     });
   }
@@ -86,7 +86,7 @@ function loginSucc(user, rows, res) {
     res.cookie('session', token, { httpOnly: false });
     res.json({
       success: true,
-      message: `Uspješno prijavljen: ${user.username} (broken auth on)`,
+      message: `korisnik prijavljen: ${user.username} (broken auth on)`,
       cookie: token,
       exposedRows: rows
     });
@@ -96,7 +96,7 @@ function loginSucc(user, rows, res) {
       res.cookie('session', token, { httpOnly: true });
       res.json({
         success: true,
-        message: `Uspješno prijavljen: ${user.username} (broken auth off)`
+        message: `korisnik prijavljen: ${user.username} (broken auth off)`
       });
     });
   }

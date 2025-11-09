@@ -37,7 +37,7 @@ html
 
       .section
         h2 SQL umetanje (tautologija)
-        p Kad je uključena, backend koristi nesigurni SQL upit. Primjer kako napraviti tautologiju:
+        p Kad je uključena koristi se nesigurni tip SQL upita. Primjer za input koji iskorištava ranjivost:
         pre
           | Username: ' OR '1'='1' -- 
           br
@@ -48,8 +48,7 @@ html
 
       .section
         h2 Loša autentifikacija
-        p Kad je uključena, token u cookieju nije zaštićen (HttpOnly=false).  
-          | Može se dohvatiti u pregledniku pomoću document.cookie
+        p Kad je uključena token u cookieju nije zaštićen (HttpOnly=false). Može se dohvatiti u pregledniku pomoću document.cookie
         .switch
           input(type="checkbox" id="auth-flag")
           label(for="auth-flag") ranjivost uključena
@@ -66,8 +65,8 @@ html
           br
           input(type="password" id="password" name="password" placeholder="npr. admin123")
           br
-          button(type="submit") Prijavi se
+          button(type="submit") Prijavi se 
+          |  
           button(type="button" id="logout-btn") Odjavi se
-        p.note Test korisnici (username / password) : admin / admin123, user / user123
 
     script(src="/app.js")
