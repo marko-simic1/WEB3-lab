@@ -96,7 +96,8 @@ function loginSucc(user, rows, res) {
       res.cookie('session', token, { httpOnly: true });
       res.json({
         success: true,
-        message: `korisnik prijavljen: ${user.username} (broken auth off)`
+        message: `korisnik prijavljen: ${user.username} (broken auth off)`,
+        exposedRows: rows
       });
     });
   }
